@@ -1,0 +1,6 @@
+# List of Valid Users for RGDMS
+# To add a new user, use the following format:
+# <user name>, <user phone number with only digits no dashes>
+# Example:
+# BillyBob, 18005551234
+Example, 18005551212

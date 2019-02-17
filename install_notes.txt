@@ -1,0 +1,44 @@
+#extract tarball of latest RGMS release
+
+#setup wireless
+
+# update list of Pi packages
+sudo apt-get update
+# update Pi packages with the latest and greatest
+sudo apt-get upgrade
+
+sudo apt-get install python-setuptools
+sudo easy_install simplejson
+
+#sudo easy_install -U pygooglevoice
+# that didn't work, copied tar.gz over instead
+
+cd /home/pi/pygooglevoice/
+sudo python setup.py install
+
+#login for first time
+gvoice
+(enter email and password)
+gvoice> exit
+
+#edit login file at ~/.gvoice with email/pwd
+# copy it to root since RGDMS runs as root
+sudo cp ~/.gvoice /root/gvoice
+
+# install sqlite3
+sudo apt-get install sqlite3
+
+# install BeautifulSoup
+sudo easy_install BeautifulSoup
+
+# create /DB dir
+sudo mkdir /DB
+sudo chmod 777 /DB
+
+# add autospawn and respawn to /etc/inittab (append line below to end of file)
+rgdms:2345:respawn:sudo python /home/pi/RGDMS/RGDMS.py
+
+# add keepalive script to crontab
+crontab -e
+add the following line to end of file: 
+*/1   *    *    *    *     /usr/bin/keep_RGDMS_alive.sh
